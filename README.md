@@ -19,7 +19,7 @@ calculator/
 │
 ├── utils/
 |   ├── utils.py              # Helper functions (e.g., context display)
-|   └── my_parser.py             # Parses string expressions into Expression objects
+|   └── parser.py             # Parses string expressions into Expression objects
 ├── main.py               # Runs evaluation on a list of expressions
 ├── tests/
 │   └── test_expressions.py  # Unit tests for expression logic
