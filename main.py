@@ -1,5 +1,5 @@
 from utils.utils import context_str
-from utils.my_parser import MyParser
+from utils.my_parser import Parser
 
 
 def main():
@@ -16,7 +16,7 @@ def main():
 
     ]
     for expr in expressions:
-        parsed_expr = MyParser.assignment_expression(expr)
+        parsed_expr = Parser.assignment_expression(expr)
         if parsed_expr:
             parsed_expr.evaluate(context)
 

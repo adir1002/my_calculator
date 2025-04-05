@@ -17,8 +17,9 @@ calculator/
 │   ├── assignment.py     # Assignment expression (e.g., x = 5)
 │   └── increment.py      # Prefix/postfix increment (e.g., ++x, x++)
 │
-├── parser.py             # Parses string expressions into Expression objects
-├── utils.py              # Helper functions (e.g., context display)
+├── utils/
+|   ├── utils.py              # Helper functions (e.g., context display)
+|   └── my_parser.py             # Parses string expressions into Expression objects
 ├── main.py               # Runs evaluation on a list of expressions
 ├── tests/
 │   └── test_expressions.py  # Unit tests for expression logic
