@@ -1,23 +1,20 @@
 from utils.utils import context_str
-from utils.my_parser import myParser
+from utils.my_parser import MyParser
 
 
 def main():
     context = {}
     expressions = [
-        "ide = 0",
-        # "x = 5 + ide++",
-        "t = 2*3 -6",
-        "y = t++",
-        # "y =  ++ide + 5",
-        # "ide +=5*t",
-        # "j = ++ide + 5*9 + k++",
-        # "x = ++ide + 5",
-        # "y = (5 + 3) * 10 + t++"   
+        "i = 0",
+        "j = ++i",
+        "x = i++ + 5",
+        "y = (5+3) * 10",
+        "i +=y",
+        "y = (5 + 3) * 10 + j++"   
 
     ]
     for expr in expressions:
-        parsed_expr = myParser.parse_expression(expr)
+        parsed_expr = MyParser.parse_expression(expr)
         if parsed_expr:
             parsed_expr.evaluate(context)
 

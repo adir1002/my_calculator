@@ -30,5 +30,5 @@ class BinaryOperation(Expression):
             if right_val == 0:
                 raise ZeroDivisionError("Division by zero")
             return left_val / right_val
-        else:
-            raise SyntaxError(f"Unknown binary operator '{self.operator}'")
+        # else:
+        #     raise SyntaxError(f"Unknown binary operator '{self.operator}'")

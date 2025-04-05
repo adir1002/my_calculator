@@ -20,10 +20,21 @@ class Assignment(Expression):
             raise SyntaxError(f"Invalid assignment operator: {value}")
         return True
 
+    # def evaluate(self, context):
+    #     if self.operator == "=":
+    #         value = self.expression.evaluate(context)
+    #     elif self.operator == "+=":
+    #         value = context.get(self.variable, 0) + self.expression.evaluate(context)        
+    #     context[self.variable] = value
+    #     return value
+    
     def evaluate(self, context):
-        if self.operator == "=":
-            value = self.expression.evaluate(context)
-        elif self.operator == "+=":
-            value = context.get(self.variable, 0) + self.expression.evaluate(context)        
-        context[self.variable] = value
-        return value
+        val = self.expression.evaluate(context)
+        current = context.get(self.variable, 0)
+        if not isinstance(current, (int, float)):
+            raise TypeError(f"Variable '{self.variable}' must be numeric")
+
+        if self.operator == '=': context[self.variable] = val
+        elif self.operator == '+=': context[self.variable] = current + val
+        
+        return context[self.variable]

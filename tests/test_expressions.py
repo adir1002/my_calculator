@@ -1,9 +1,9 @@
 import unittest
-from ..expressions import (
+from expressions import (
     number, variable, binary, assignment,
     increment
 )
-from main import context
+context = {}
 
 class TestExpressionEvaluatorErrors(unittest.TestCase):
     def setUp(self):

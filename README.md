@@ -78,15 +78,15 @@ python -m unittest discover tests
 
 ```python
 expressions = [
-    "i = 5",
-    "y = (i * 8) + 7 / 7",
+    "i = 0",
     "j = ++i",
-    "x = i++ + 5",
+    "x = i++ +5",
+    "y = (5 +3) * 10",
     "i += y"
 ]
 ```
 
 Evaluates to:
 ```txt
-(i=41.0, y=41.0, j=6, x=11)
+(i=82, j=1, x=6, y=80)
 ```
