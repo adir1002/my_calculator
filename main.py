@@ -1,14 +1,14 @@
 from utils.utils import context_str
-from my_parser import myParser
+from utils.my_parser import myParser
 
 
 def main():
     context = {}
     expressions = [
         "ide = 0",
-        "x = 5 + ide++",
-        # "t = 2*3 -6",
-        # "y = t++",
+        # "x = 5 + ide++",
+        "t = 2*3 -6",
+        "y = t++",
         # "y =  ++ide + 5",
         # "ide +=5*t",
         # "j = ++ide + 5*9 + k++",
