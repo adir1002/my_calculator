@@ -5,16 +5,18 @@ from utils.my_parser import MyParser
 def main():
     context = {}
     expressions = [
-        "i = 0",
+        "i= 0",
         "j = ++i",
         "x = i++ + 5",
         "y = (5+3) * 10",
         "i +=y",
-        "y = (5 + 3) * 10 + j++"   
+        "y = (5 + 3) * 10 + i++",
+        "ff=5",
+        "ff+=7*12 + ++i -1"
 
     ]
     for expr in expressions:
-        parsed_expr = MyParser.parse_expression(expr)
+        parsed_expr = MyParser.assignment_expression(expr)
         if parsed_expr:
             parsed_expr.evaluate(context)
 

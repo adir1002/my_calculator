@@ -4,22 +4,20 @@ from expressions.variable import Variable
 
 
 class Increment(Expression):
+    ALLOWED_INCREMENT = r'(\+\+)'
+    PRE_INC = ALLOWED_INCREMENT + Variable.VARIABLE_PATTERN
+    POST_INC = Variable.VARIABLE_PATTERN + ALLOWED_INCREMENT
 
     def __init__(self, variable, pre_increment=False):
         self.variable = variable
         self.pre_increment = pre_increment
     
-    # def evaluate(self, context):
-    #     var_name = self.variable
-    #     if var_name not in context:
-    #         context[var_name] = 0
-    #     if self.pre_increment:
-    #         context[var_name] += 1
-    #         return context[var_name]
-    #     else:
-    #         old_value = context[var_name]
-    #         context[var_name] += 1
-    #         return old_value 
+    @staticmethod
+    def is_valid(value):
+        if not isinstance(value, Variable):
+            raise TypeError("Increment must be on Variable")
+        return True
+
     def evaluate(self, context):
         name = self.variable.name
         val = context.get(name, 0)
