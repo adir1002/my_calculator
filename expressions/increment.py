@@ -5,8 +5,10 @@ from expressions.variable import Variable
 
 class Increment(Expression):
     ALLOWED_INCREMENT = r'(\+\+)'
-    PRE_INC = ALLOWED_INCREMENT + Variable.VARIABLE_PATTERN
-    POST_INC = Variable.VARIABLE_PATTERN + ALLOWED_INCREMENT
+    ALLOWED_PRE_INC_RGX = ALLOWED_INCREMENT + Variable.VARIABLE_PATTERN
+    ALLOWED_POST_INC_RGX = Variable.VARIABLE_PATTERN + ALLOWED_INCREMENT
+    PRE_INC_FLAG = 'PRE_INC_'
+    POST_INC_FLAG = '_POST_INC'
 
     def __init__(self, variable, pre_increment=False):
         self.variable = variable

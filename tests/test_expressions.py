@@ -3,6 +3,7 @@ from expressions import (
     number, variable, binary, assignment,
     increment
 )
+from utils.my_parser import Parser
 # from my_parser import Parser
 context = {}
 
@@ -44,61 +45,56 @@ class TestExpressionEvaluation(unittest.TestCase):
 
     def test_add_assignment(self):
         context = {"i": 2, "y": 4}
-        expr = assignment.Assignment(variable.Variable("i"), "y")
-        self.assertEqual(expr.evaluate(context), 4)
+        binary_expr = binary.BinaryOperation(variable.Variable("i"), '+', variable.Variable("y"))
+        expr = assignment.Assignment("i", binary_expr)
+        self.assertEqual(expr.evaluate(context), 6)
         self.assertEqual(context["i"], 6)
 
-#     def test_parse_expression_assignment(self):
-#         expr = Parser.parse_expression("x = 3 + 4")
-#         context = {}
-#         self.assertEqual(expr.evaluate(context), 7)
-#         self.assertEqual(context["x"], 7)
-
-#     def test_parse_expression_parens(self):
-#         expr = Parser.parse_expression("4 * (3 + 5)")
-#         self.assertEqual(expr.evaluate({}), 32)
+    def test_parse_expression_parens(self):
+        expr = Parser.parse_expression("4*(3+5)")
+        self.assertEqual(expr.evaluate({}), 32)
 
 
 
-# class TestExpressionEvaluatorErrors(unittest.TestCase):
-#     def setUp(self):
-#         context.clear()
+class TestExpressionEvaluatorErrors(unittest.TestCase):
+    def setUp(self):
+        context.clear()
 
-#     def test_undefined_variable(self):
-#         with self.assertRaises(NameError):
-#             variable.Variable('x').evaluate()
+    def test_undefined_variable(self):
+        with self.assertRaises(NameError):
+            variable.Variable('x').evaluate(context)
 
-#     def test_invalid_number_type(self):
-#         with self.assertRaises(TypeError):
-#             number.Number("string")
+    def test_invalid_number_type(self):
+        with self.assertRaises(TypeError):
+            number.Number("string")
 
-#     def test_variable_non_numeric(self):
-#         context['x'] = "hello"
-#         with self.assertRaises(TypeError):
-#             variable.Variable('x').evaluate()
+    def test_variable_non_numeric(self):
+        context['x'] = "hello"
+        with self.assertRaises(TypeError):
+            variable.Variable('x').evaluate()
 
-#     def test_binary_operator_invalid_operand(self):
-#         with self.assertRaises(TypeError):
-#             binary.BinaryOperation(number.Number(5), '+', number.Number("x")).evaluate()
+    def test_binary_operator_invalid_operand(self):
+        with self.assertRaises(TypeError):
+            binary.BinaryOperation(number.Number(5), '+', number.Number("x")).evaluate(context)
 
-#     def test_binary_operator_unknown(self):
-#         with self.assertRaises(SyntaxError):
-#             binary.BinaryOperation(number.Number(5), '^', number.Number(2)).evaluate()
+    def test_binary_operator_unknown(self):
+        with self.assertRaises(SyntaxError):
+            binary.BinaryOperation(number.Number(5), '^', number.Number(2)).evaluate(context)
 
-#     def test_division_by_zero(self):
-#         with self.assertRaises(ZeroDivisionError):
-#             binary.BinaryOperation(number.Number(5), '/', number.Number(0)).evaluate()
+    def test_division_by_zero(self):
+        with self.assertRaises(ZeroDivisionError):
+            binary.BinaryOperation(number.Number(5), '/', number.Number(0)).evaluate(context)
 
-#     def test_assignment_non_numeric(self):
-#         class Dummy:
-#             def evaluate(self):
-#                 return "oops"
-#         with self.assertRaises(TypeError):
-#             assignment.Assignment('x', Dummy()).evaluate()
+    def test_assignment_non_numeric(self):
+        class Dummy:
+            def evaluate(self):
+                return "oops"
+        with self.assertRaises(TypeError):
+            assignment.Assignment('x', Dummy()).evaluate()
 
-#     def test_increment_undefined_variable(self):
-#         with self.assertRaises(NameError):
-#             increment.Increment('x').evaluate()
+    def test_increment_undefined_variable(self):
+        with self.assertRaises(NameError):
+            increment.Increment(variable.Variable('x')).evaluate(context)
 
 #     def test_increment_non_numeric_variable(self):
 #         context['x'] = "string"

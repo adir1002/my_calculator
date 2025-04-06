@@ -21,7 +21,7 @@ class Parser:
                 if op in Assignment.OPERATORS_DICTIONARY.keys():
                     parsed_val = BinaryOperation(Variable(var), Assignment.OPERATORS_DICTIONARY[op], parsed_val)
                 return Assignment(var, parsed_val)
-
+ 
 
     @staticmethod
     def parse_expression(expr: str) :
@@ -29,8 +29,8 @@ class Parser:
         if expr.startswith('(') and expr.endswith(')'):
             return Parser.parse_expression(expr[1:-1])
 
-        expr = re.sub(Increment.PRE_INC, r'PRE_INC_\2', expr)
-        expr = re.sub(Increment.POST_INC, r'\1_POST_INC', expr)
+        expr = re.sub(Increment.ALLOWED_PRE_INC_RGX, r'' + Increment.PRE_INC_FLAG + r'\2', expr)
+        expr = re.sub(Increment.ALLOWED_POST_INC_RGX, r'\1' +Increment.POST_INC_FLAG, expr)
 
         for op in ['+', '-', '*', '/']:
             depth = 0
@@ -44,9 +44,9 @@ class Parser:
                         Parser.parse_expression(expr[i+1:])
                     )
 
-        if expr.startswith("PRE_INC_"):
+        if expr.startswith(Increment.PRE_INC_FLAG):
             return Increment(Variable(expr[8:]), pre_increment=True)
-        if expr.endswith("_POST_INC"):
+        if expr.endswith(Increment.POST_INC_FLAG):
             return Increment(Variable(expr[:-9]), pre_increment=False)
 
         if re.fullmatch(r"\d+", expr):
