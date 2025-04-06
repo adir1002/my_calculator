@@ -11,13 +11,12 @@ class Assignment(Expression):
 
     def __init__(self, variable, expression):
         if Assignment.is_valid(variable):
-        # if Assignment.is_valid([operator,variable]):
             self.variable = variable
             self.expression = expression
 
     @staticmethod
     def is_valid(value):
-        # if value[0] not in ALLOWED_OPERATORS:
+        # if value[0] not in Assignment.ALLOWED_OPERATORS:
         #     raise SyntaxError(f"Invalid assignment operator: {value[0]}")
         Variable.is_valid(value)
         return True

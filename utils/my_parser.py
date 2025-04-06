@@ -14,7 +14,7 @@ class Parser:
         for op in Assignment.ALLOWED_OPERATORS:
             if op in expr:
                 parts = expr.split(op)
-                if len(parts) != 2:
+                if len(parts) != 2 :
                     raise SyntaxError(f"Invalid assignment: {expr}")
                 var, val = parts
                 parsed_val = Parser.parse_expression(val)
