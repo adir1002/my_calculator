@@ -11,17 +11,12 @@ class Parser:
     def assignment_expression(expr: str):
         expr = expr.replace(" ", "")
 
-        for op in Assignment.ALLOWED_OPERATORS:
-            if op in expr:
-                parts = expr.split(op)
-                if len(parts) != 2 :
-                    raise SyntaxError(f"Invalid assignment: {expr}")
-                var, val = parts
-                parsed_val = Parser.parse_expression(val)
-                if op in Assignment.OPERATORS_DICTIONARY.keys():
-                    parsed_val = BinaryOperation(Variable(var), Assignment.OPERATORS_DICTIONARY[op], parsed_val)
-                return Assignment(var, parsed_val)
- 
+        if "+=" in expr:
+            var, value = expr.split("+=")
+            return Assignment(var, "+=", Parser.parse_expression(value))
+        if "=" in expr:
+            var, value = expr.split("=")
+            return Assignment(var, "=", Parser.parse_expression(value))
 
     @staticmethod
     def parse_expression(expr: str) :

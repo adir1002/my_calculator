@@ -17,10 +17,8 @@ def main():
     ]
     for expr in expressions:
         parsed_expr = Parser.assignment_expression(expr)
-        print(parsed_expr.variable)
-        print(parsed_expr.expression)
-        # if parsed_expr:
-        #     parsed_expr.evaluate(context)
+        if parsed_expr:
+            parsed_expr.evaluate(context)
 
     print(context_str(context))
 
