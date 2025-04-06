@@ -94,16 +94,16 @@ class TestExpressionEvaluatorErrors(unittest.TestCase):
 
     def test_increment_undefined_variable(self):
         with self.assertRaises(NameError):
-            increment.Increment(variable.Variable('x')).evaluate(context)
+            str(increment.Increment(variable.Variable('x')).evaluate(context))
 
-#     def test_increment_non_numeric_variable(self):
-#         context['x'] = "string"
-#         with self.assertRaises(TypeError):
-#             increment.Increment('x').evaluate()
+    def test_increment_non_numeric_variable(self):
+        context['x'] = "string"
+        with self.assertRaises(TypeError):
+            increment.Increment('x').evaluate()
 
-#     def test_assignment_undefined_variable(self):
-#         with self.assertRaises(NameError):
-#             assignment.Assignment('x', '+=', number.Number(5)).evaluate()
+    # def test_assignment_undefined_variable(self):
+    #     # with self.assertRaises(NameError):
+    #     print(assignment.Assignment('x', number.Number(5)).evaluate(context))
 
 #     def test_compound_assignment_non_numeric(self):
 #         context['x'] = "text"

@@ -22,7 +22,9 @@ class Increment(Expression):
 
     def evaluate(self, context):
         name = self.variable.name
-        val = context.get(name, 0)
+        val = context.get(name)
+        if val == None: 
+            raise NameError(f"Variable '{self.variable.name}' is not defined")
         if not isinstance(val, (int, float)):
             raise TypeError(f"Variable '{name}' must be numeric")
         context[name] = val + 1
