@@ -6,9 +6,9 @@ from expressions.variable import Variable
 
 class Increment(Expression):
 
-    ALLOWED_INCREMENT = r'(\+\+)'
-    ALLOWED_PRE_INC_RGX = ALLOWED_INCREMENT + Variable.VARIABLE_PATTERN
-    ALLOWED_POST_INC_RGX = Variable.VARIABLE_PATTERN + ALLOWED_INCREMENT
+    INCREMENT_REGEX = r'(\+\+)'
+    PRE_INC_RGX = INCREMENT_REGEX + Variable.VARIABLE_PATTERN
+    POST_INC_RGX = Variable.VARIABLE_PATTERN + INCREMENT_REGEX
     PRE_INC_FLAG = 'PRE_INC_'
     POST_INC_FLAG = '_POST_INC'
 
