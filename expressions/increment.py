@@ -12,7 +12,6 @@ class Increment(Expression):
     PRE_INC_FLAG = 'PRE_INC_'
     POST_INC_FLAG = '_POST_INC'
 
-
     def __init__(self, variable: Variable, pre=True):
         if Increment.is_valid(variable):
             self.variable = variable
