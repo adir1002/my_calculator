@@ -5,7 +5,7 @@ class BinaryOperation(Expression):
     ALLOWED_BINARY_OPERATORS = {"+", "-", "*" ,"/"}
 
     def __init__(self, left, operator, right):
-        if self.is_valid:
+        if BinaryOperation.is_valid(operator):
             self.left = left
             self.operator = operator
             self.right = right
@@ -30,5 +30,5 @@ class BinaryOperation(Expression):
             if right_val == 0:
                 raise ZeroDivisionError("Division by zero")
             return left_val / right_val
-        else:
-            raise SyntaxError(f"Unknown binary operator '{self.operator}'")
+        # else:
+        #     raise SyntaxError(f"Unknown binary operator '{self.operator}'")

@@ -4,7 +4,8 @@ from expressions.base import Expression
 from expressions.variable import Variable
 
 class Assignment(Expression):
-    VALID_OPERATORS = {'=', '+='}
+    ASSIGNMENT_OPERATORS = {'=': r'=', '+=': r'\+='}
+    ASSIGNMENT_REGEX = re.compile(rf"^([a-zA-Z_]\w*)*({'|'.join(ASSIGNMENT_OPERATORS.values())})*(.+)$")
 
     def __init__(self, variable: str, operator: str, expression: Expression):
         if Assignment.is_valid(variable,operator):
@@ -15,7 +16,7 @@ class Assignment(Expression):
     @staticmethod
     def is_valid(variable,operator):
         Variable.is_valid(variable)
-        if operator not in Assignment.VALID_OPERATORS:
+        if operator not in Assignment.ASSIGNMENT_OPERATORS.keys():
             raise SyntaxError(f"Invalid assignment operator: {operator}")
         return True
 
@@ -30,27 +31,3 @@ class Assignment(Expression):
         elif self.operator == '+=': context[self.variable] = current + val
 
         return context[self.variable]
-
-
-
-
-# class Assignment(Expression):
-#     OPERATORS_DICTIONARY = {"+=": "+"}
-#     ALLOWED_OPERATORS =list(OPERATORS_DICTIONARY.keys()) + ["="]
-
-
-#     def __init__(self, variable, expression):
-#         if Assignment.is_valid(variable):
-#             self.variable = variable
-#             self.expression = expression
-
-#     @staticmethod
-#     def is_valid(value):
-#         # if value[0] not in Assignment.ALLOWED_OPERATORS:
-#         #     raise SyntaxError(f"Invalid assignment operator: {value[0]}")
-#         Variable.is_valid(value)
-#         return True
-
-#     def evaluate(self, context):
-#         context[self.variable] = self.expression.evaluate(context)
-#         return context[self.variable]

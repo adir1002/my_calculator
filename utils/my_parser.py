@@ -8,24 +8,28 @@ from expressions.increment import Increment
 class Parser:
 
     @staticmethod
-    def assignment_expression(expr: str):
+    def assignment_expression(expr: str) :
         expr = expr.replace(" ", "")
 
-        if "+=" in expr:
-            var, value = expr.split("+=")
-            return Assignment(var, "+=", Parser.parse_expression(value))
-        if "=" in expr:
-            var, value = expr.split("=")
-            return Assignment(var, "=", Parser.parse_expression(value))
+        match = Assignment.ASSIGNMENT_REGEX.match(expr)
+        if match:
+            var, op, value = match.groups()
+            return Assignment(var, op, Parser.parse_expression(value))
 
     @staticmethod
     def parse_expression(expr: str) :
-
         if expr.startswith('(') and expr.endswith(')'):
             return Parser.parse_expression(expr[1:-1])
 
+
         expr = re.sub(Increment.ALLOWED_PRE_INC_RGX, r'' + Increment.PRE_INC_FLAG + r'\2', expr)
         expr = re.sub(Increment.ALLOWED_POST_INC_RGX, r'\1' +Increment.POST_INC_FLAG, expr)
+            
+        if re.fullmatch(r"\d+", expr):
+            return Number(int(expr))
+
+        if re.fullmatch(rf'^(?!{Increment.PRE_INC_FLAG}|.*{Increment.POST_INC_FLAG})([a-zA-Z_][a-zA-Z0-9_]*)$', expr):
+            return Variable(expr)
 
         for op in ['+', '-', '*', '/']:
             depth = 0
@@ -40,14 +44,8 @@ class Parser:
                     )
 
         if expr.startswith(Increment.PRE_INC_FLAG):
-            return Increment(Variable(expr[8:]), pre_increment=True)
+            return Increment(Variable(expr[len(Increment.PRE_INC_FLAG):]), pre=True)
         if expr.endswith(Increment.POST_INC_FLAG):
-            return Increment(Variable(expr[:-9]), pre_increment=False)
-
-        if re.fullmatch(r"\d+", expr):
-            return Number(int(expr))
-
-        if re.fullmatch(r"[a-zA-Z_]\w*", expr):
-            return Variable(expr)
-
+            return Increment(Variable(expr[:-len(Increment.POST_INC_FLAG)]), pre=False)
+        
         raise SyntaxError(f"Unrecognized expression: '{expr}'")

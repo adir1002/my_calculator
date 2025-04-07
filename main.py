@@ -22,7 +22,5 @@ def main():
 
     print(context_str(context))
 
-
-
 if __name__ == "__main__":
     main()
